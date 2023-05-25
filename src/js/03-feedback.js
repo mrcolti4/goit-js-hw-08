@@ -10,6 +10,16 @@ const formObj = isObjEmpty(localStorageValues)
   ? { email: '', message: '' }
   : { ...localStorageValues };
 
+const clearObj = () => {
+  formObj.email = '';
+  formObj.message = '';
+  localStorageApi.remove(FORM_KEY);
+};
+
+const showObj = () => {
+  console.log(formObj);
+};
+
 const handleFeedBackInputs = ({ target }) => {
   if (target.nodeName === 'INPUT') {
     formObj.email = target.value;
@@ -25,7 +35,10 @@ const handleForm = e => {
   const target = e.target;
   e.preventDefault();
   target.reset();
-  console.log(formObj);
+  if (formObj.email !== '' && formObj.message !== '') {
+    showObj();
+    clearObj();
+  }
 };
 
 const onDocumentLoadFillForm = e => {
